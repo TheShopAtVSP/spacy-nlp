@@ -59,14 +59,14 @@ def format_POS(token, light=False, flat=False):
         ("POS_fine", token.tag_),
         ("POS_coarse", token.pos_),
         ("arc", token.dep_),
-        ("modifiers", [])
+        ("children", [])
     ])
     if light:
         subtree.pop("lemma")
         subtree.pop("NE")
     if flat:
         subtree.pop("arc")
-        subtree.pop("modifiers")
+        subtree.pop("children")
     return subtree
 
 
@@ -77,7 +77,7 @@ def POS_tree_(root, light=False):
     '''
     subtree = format_POS(root, light=light)
     for c in root.children:
-        subtree["modifiers"].append(POS_tree_(c))
+        subtree["children"].append(POS_tree_(c))
     return subtree
 
 
